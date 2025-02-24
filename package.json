@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@splidejs/splide": "^4.1.4",
+    "fslightbox": "^3.4.2",
+    "swiper": "^11.2.3",
+    "three": "^0.173.0"
+  }
+}
