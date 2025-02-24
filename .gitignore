@@ -1,0 +1,28 @@
+# Fișiere de sistem și cache
+.DS_Store
+Thumbs.db
+
+# Setări de editor (VS Code, JetBrains, etc.)
+.vscode/
+.idea/
+*.code-workspace
+
+# Cache și fișiere temporare
+*.log
+*.tmp
+*.bak
+
+# Imagini optimizate generate automat
+*.webp
+*.avif
+
+# Upload-uri temporare
+uploads/temp/
+
+# Ignorare fișiere de configurare sensibile
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
