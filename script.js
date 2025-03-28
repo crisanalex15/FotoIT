@@ -116,7 +116,24 @@ element.addEventListener("click", () => {
   arrows[1].classList.toggle("hidden");
   box.classList.toggle("moved");
   overlay.classList.toggle("show");
+  setTimeout(() => {
+    overlay.style.visibility = "visible";
+  }, 300);
 });
+
+overlay.addEventListener("click", () => {
+  if (box.classList.contains("moved")) {
+    box.classList.remove("moved");
+    overlay.classList.remove("show");
+    const arrows = element.querySelectorAll("img");
+    arrows[0].classList.toggle("hidden");
+    arrows[1].classList.toggle("hidden");
+    setTimeout(() => {
+      overlay.style.visibility = "hidden";
+    }, 300);
+  }
+});
+
 gsap.from("header .container a, header .container", {
   y: -60,
   opacity: 0,
@@ -240,4 +257,106 @@ gsap.from(".text-chenar", {
     scrub: 1, // Face animația fluidă în funcție de scroll
     toggleActions: "play reverse play reverse",
   },
+});
+
+const buttonUpload = document.querySelector(".LoadImg");
+const modalImg = document.querySelector(".modal");
+const overlay2 = document.querySelector(".overlay2");
+buttonUpload.addEventListener("click", () => {
+  modalImg.classList.toggle("hidden");
+  overlay2.classList.toggle("show");
+  document.querySelector(".modal").style.display = "block";
+});
+
+overlay2.addEventListener("click", () => {
+  modalImg.classList.add("hidden");
+  overlay2.classList.remove("show");
+
+  setTimeout(() => {
+    overlay2.style.visibility = "hidden";
+  }, 300);
+});
+
+buttonUpload.addEventListener("click", () => {
+  overlay2.style.visibility = "visible";
+});
+
+const sendData = async () => {
+  const name = document.querySelector("#name").value;
+  const email = document.querySelector("#email").value;
+  const message = document.querySelector("#message").value;
+  const data = {
+    name,
+    email,
+    message,
+  };
+  const response = await fetch("http://localhost:5100/Home/Preia", {
+    method: "POST",
+    body: JSON.stringify({ Name: name, Email: email, Description: message }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const jsonResponse = await response.json();
+  console.log(jsonResponse);
+  document.querySelector("#name").value = "";
+  document.querySelector("#email").value = "";
+  document.querySelector("#message").value = "";
+  alert("Mesajul a fost trimis cu succes!");
+};
+
+document.querySelector(".Trimite").addEventListener("click", (event) => {
+  event.preventDefault();
+  sendData();
+});
+
+document.querySelector(".Primeste").addEventListener("click", () => {
+  window.location.href = "contacte.html";
+});
+
+const uploadInput = document.getElementById("uploadImage");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+uploadInput.addEventListener("change", function (event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const img = new Image();
+      img.onload = function () {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        convertToBlackAndWhite();
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+document.getElementById("uploadBtn").addEventListener("click", async () => {
+  const imageDataURL = canvas.toDataURL("image/png"); // Convertim în base64
+
+  const response = await fetch("http://localhost:5100/Home/GETIMG", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      image: ImageName,
+      imagePath: imagePath,
+      ImageData: ImageData,
+    }),
+  });
+
+  if (response.ok) {
+    alert("Poza a fost încărcată cu succes!");
+    uploadInput.value = "";
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  } else {
+    alert("Eroare la încărcarea pozei.");
+  }
+  // clear
 });

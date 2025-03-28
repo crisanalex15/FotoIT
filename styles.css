@@ -100,7 +100,72 @@ header {
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  width: 100%;
+}
+
+.contact-form label {
+  font-weight: 600;
+  color: #fff;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 14px;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.contact-form textarea {
+  resize: none;
+  min-height: 100px;
+}
+
+h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.contact button {
+  width: 100%;
+  padding: 12px;
+  background-color: #1e1e1e;
+  color: #d0d7f7;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  margin-bottom: 10px;
+}
+
+.contact button:focus {
+  outline: none;
+}
+
+.contact button:hover {
+  background-color: #d0d7f7;
+  color: #1e1e1e;
+  transform: scale(1.05);
 }
 
 .contact-relative {
@@ -125,17 +190,86 @@ header {
 .contact .icon-arrow {
   position: absolute;
   top: 50%;
-  right: 25px;
+  right: 20px;
   transform: translate(90%, -50%);
   width: 50px;
   background-color: #d4af37;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-}
-
-.contact .icon-arrow {
+  z-index: -1;
   transition: all 500ms ease;
 }
+
+.contact .icon-arrow:hover {
+  transform: translate(0%, -50%);
+  background-color: #d0d7f7;
+  transition: all 500ms ease;
+}
+
+.contact .linieContact {
+  width: 80%;
+  height: 2px;
+  background-color: #1e1e1e;
+  margin: 16px auto;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  position: fixed; /* Sau absolute, dacă e relativ la un container */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  max-width: 90%;
+  height: auto;
+  background: #1e1e1e;
+  z-index: 12;
+  transition: opacity 0.3s ease;
+  border-radius: 30px;
+}
+#uploadImage {
+  display: block;
+  margin: 20px auto;
+  padding: 10px;
+  border: 2px solid #d4af37;
+  border-radius: 5px;
+  background: white;
+  cursor: pointer;
+}
+
+#canvas {
+  display: block;
+  margin: 20px auto;
+  max-width: 100%;
+  border: 2px solid #333;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#uploadBtn {
+  background: #d4af37;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+  transition: background 0.3s ease-in-out;
+}
+#uploadBtn:hover {
+  background: #b8922d;
+}
+
+#uploadedImage {
+  display: block;
+  margin: 20px auto;
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+/* OVERLAY */
 
 .overlay {
   position: fixed;
@@ -146,6 +280,20 @@ header {
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
   z-index: 9;
+  visibility: hidden;
+  backdrop-filter: blur(5px);
+  transition: opacity 0.3s ease;
+}
+
+.overlay2 {
+  position: fixed;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 11;
   visibility: hidden;
   backdrop-filter: blur(5px);
   transition: opacity 0.3s ease;
@@ -170,6 +318,7 @@ header::after {
 .show {
   opacity: 1;
   visibility: visible;
+  transition: all 0.3s ease;
 }
 
 .halfTransparent {
@@ -345,7 +494,7 @@ h3 {
 .swiper {
   position: relative;
   width: 150vh;
-  height: 50vh;
+  height: 65vh;
   background-color: #1e1e1e;
   padding: 30px;
   padding-bottom: 7%;
@@ -536,7 +685,7 @@ footer {
     grid-column: 1 / span 6;
     grid-row: 1 / span 12;
     padding: 16px;
-    width: 90%;
+    width: 120%;
     bottom: 0%;
     margin: 0;
     background: none;
@@ -550,11 +699,11 @@ footer {
     width: 100%;
     height: 100%;
     padding-bottom: 96px;
-    left: -33px;
   }
 
   .swiper-button-next,
   .swiper-button-prev {
+    margin-top: 10px;
     transform: translate(0, 100%);
     scale: 0.5;
   }
@@ -562,6 +711,11 @@ footer {
   .profil-Block {
     grid-row: 3 / span 5;
     grid-column: 2 / span 2;
+  }
+
+  .text-profi {
+    margin-left: 24px;
+    margin-right: 24px;
   }
 
   .text-chenar {
